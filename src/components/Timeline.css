@@ -1,0 +1,209 @@
+/* ===== COMPONENT SCOPED GLOBAL COLORS & BASICS ===== */
+#sectionPin {
+  background-color: #000000 !important; /* Isolated pure black timeline backdrop */
+  color: #f4f4f2;
+  position: relative;
+  height: 400vh; /* The deep vertical scrolling runway shared by both viewport configurations */
+}
+
+#sectionPin h3 {
+  color: #ffffff !important; /* Force title typography white */
+  margin: 0.4rem 0 0.6rem; 
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.card {
+  background: #1a1b1d;
+  border: 1px solid #2a2b2d;
+  border-radius: 16px;
+  padding: 2.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card .year { color: #ffb400; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; }
+.card p { color: #9a9a9d; line-height: 1.5; margin: 0; }
+
+.pin-wrap-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+/* ===== DESKTOP HOVER ENGINE VIEW RULES (min-width: 701px) ===== */
+@media screen and (min-width: 701px) {
+  .pin-wrap-sticky {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pin-wrap {
+    display: flex;
+    align-items: center;
+    padding-inline: 15vw;
+    will-change: transform;
+  }
+
+  .card {
+    flex: 0 0 auto;
+    width: 70vw;
+    max-width: 460px;
+    margin-right: 8vw;
+  }
+
+  .card:last-child { margin-right: 0; }
+
+  /* Horizontal Tracker Engine rules mapping styling */
+  .timeline-track {
+    position: relative;
+    width: 100vw;
+    max-width: 1500px;
+    margin: 4rem auto 0;
+    height: 4px;
+    background: #3a3a3d;
+    border-radius: 2px;
+  }
+
+  .timeline-fill {
+    position: absolute;
+    inset: 0;
+    background: #ffb400;
+    border-radius: 2px;
+    transform-origin: left;
+  }
+
+  .peg {
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    margin-top: -9px;
+    border-radius: 50%;
+    background: #3a3a3d;
+    border: 2px solid #000000;
+    transform: scale(0.7);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .peg.active {
+    background: #ffb400;
+    transform: scale(1.1);
+  }
+
+  .peg-label {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #9a9a9d;
+    white-space: nowrap;
+  }
+
+  .peg.active .peg-label { color: #ffffff; }
+
+  .peg--1 { left: 0%; }
+  .peg--2 { left: 33.33%; }
+  .peg--3 { left: 66.66%; }
+  .peg--4 { left: 100%; }
+}
+
+/* ===== MOBILE STICKY STYLING LAYERS (max-width: 700px) ===== */
+@media screen and (max-width: 700px) {
+  .pin-wrap-sticky {
+    flex-direction: row-reverse; /* Places track on left and card on right side */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6vw;
+  }
+
+  /* Stack cards direct on top of each other absolutely inside the sticky frame space */
+  .pin-wrap {
+    position: relative;
+    width: 72vw;
+    height: 60vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .card {
+    grid-column: 1;
+    grid-row: 1;
+    height: fit-content;
+    align-self: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+  }
+
+  /* Bring card forward instantly when user scrolls across its progressive boundary context */
+  .card.active-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    z-index: 5;
+  }
+
+  /* Reorient Layout to Vertical Progress Track */
+  .timeline-track {
+    position: relative;
+    width: 4px;
+    height: 65vh;
+    background: #3a3a3d;
+    border-radius: 2px;
+    margin-left: 2vw;
+  }
+
+  .timeline-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffb400;
+    border-radius: 2px;
+    transform-origin: top;
+  }
+
+  .peg {
+    position: absolute;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    border-radius: 50%;
+    background: #3a3a3d;
+    border: 2px solid #000000;
+    transform: scale(0.8);
+    transition: transform 0.25s ease, background-color 0.25s ease;
+  }
+
+  .peg.active {
+    background: #ffb400;
+    transform: scale(1.2);
+  }
+
+  .peg-label {
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9a9a9d;
+    transition: color 0.2s ease;
+  }
+
+  .peg.active .peg-label {
+    color: #ffb400;
+  }
+
+  /* Vertical absolute anchoring distribution positions along Y tracking rail axis */
+  .peg--1 { top: 0%; }
+  .peg--2 { top: 33.33%; }
+  .peg--3 { top: 66.66%; }
+  .peg--4 { top: 100%; }
+}
